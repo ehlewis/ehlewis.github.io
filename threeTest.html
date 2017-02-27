@@ -17,7 +17,7 @@
 			ga('send', 'pageview');
 
 		</script>
-		
+
 	</head>
 	<body>
 		<script src="scripts/three.min.js"></script>
@@ -34,7 +34,7 @@
 			// Lights
 			var ambientLight = new THREE.AmbientLight(0x0c0c0c);
       var spotLight = new THREE.SpotLight(0xffffff);
-      spotLight.position.set(2.5, 2.5, 2.5);
+      spotLight.position.set(40, 40, 40);
       spotLight.castShadow = true;
 			scene.add(ambientLight);
       scene.add(spotLight);
@@ -45,60 +45,32 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
 
-			console.log("about to load");
-			// instantiate a loader
 			var loader = new THREE.JSONLoader();
-
-			// load a resource
-			loader.load(
-				// resource URL
-				'models/octotest.js',
-				// Function when resource is loaded
-				function ( geometry, materials ) {
+			loader.load('models/octoout.js', function ( geometry, materials ) {
 					console.log("finished");
 					var material = new THREE.MultiMaterial( materials );
-					var object = new THREE.Mesh( geometry, material );
+					var object = new THREE.SkinnedMesh( geometry, material );
 					scene.add( object );
 				}
 			);
 
-			console.log("I probs didnt run");
-			/*
-			var loader = new THREE.JSONLoader();
-			  loader.load("../skeleton.js", function(geometry, materials) {
-			    materials[0].skinning = true;
-			    callback(new THREE.SkinnedMesh(geometry, materials[0]));
-			  });
-			*/
-
-			/*
-			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			var material = new THREE.MeshLambertMaterial( { color: 0x4286f4, wireframe: true } );
-			var cube = new THREE.Mesh( geometry, material );
-
-			scene.add( cube );
-			*/
-
-			// Functions and calls
 			var render = function () {
 				requestAnimationFrame( render );
-				//cube.rotation.x += .01;
+				//object.rotation.x += .01;
 				//cube.rotation.y += Math.cos(cube.rotation.x)/100;
+				var timer = Date.now() * 0.0001;
+				//camera.position.x = Math.sin( timer ) * 10;
+				//camera.position.y = Math.sin( timer ) * 10;
 				camera.lookAt( scene.position );
-
 				renderer.render(scene, camera);
 			};
-
-			/*
+			render();
 			function animate() {
-
   			requestAnimationFrame( animate );
   			controls.update();
+			}
+			animate();
 
-			}*/
-
-			render();
-			//animate();
 		</script>
 	</body>
 </html>
