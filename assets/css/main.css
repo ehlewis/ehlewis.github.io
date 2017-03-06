@@ -1,6 +1,9 @@
 @import url(font-awesome.min.css);
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,900");
 
+/*@import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond|Permanent+Marker|Teko');*/
+
+
 /*
 	Phantom by HTML5 UP
 	html5up.net | @ajlkn
@@ -9,7 +12,8 @@
 
 /* Reset */
 
-	html, body, div, span, applet, object, iframe, h1, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	/** Not using , canvas in this */
+	html, body, div, span, applet, object, iframe, h1, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 		margin: 0;
 		padding: 0;
 		border: 0;
@@ -24,6 +28,7 @@
 		border: 0;
 		font-size: 100%;
 		font: inherit;
+		/*font-family: 'Permanent Marker', cursive;*/
 		vertical-align: baseline;
 		text-align: center;
 	}
@@ -1650,7 +1655,7 @@
 /* Type */
 
 	body, input, select, textarea {
-		color: #585858;
+		color: #000000;/*#585858;*/
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
 		font-size: 16pt;
 		font-weight: 300;
@@ -2846,7 +2851,7 @@
 /* Header */
 
 	#header {
-		padding: 8em 0 0.1em 0 ;
+		padding: 2.5em 0 0.1em 0 ;
 	}
 
 		#header .logo {
@@ -2855,7 +2860,7 @@
 			color: inherit;
 			font-weight: 900;
 			letter-spacing: 0.35em;
-			margin: 0 0 2.5em 0;
+			margin: 0 0 0em 0;
 			text-decoration: none;
 			text-transform: uppercase;
 			display: inline-block;
@@ -2987,6 +2992,7 @@
 		-ms-transition: opacity 0.45s ease;
 		transition: opacity 0.45s ease;
 		opacity: 1;
+		/*background-image: url("../../assets/testBanner.png");*/
 	}
 
 	#menu {
@@ -3188,8 +3194,6 @@
 		padding: 5em 0 6em 0 ;
 		background-color: #f6f6f6;
 		margin: auto;
-
-
 	}
 
 		#footer > .inner {
@@ -3319,7 +3323,7 @@
 		width: 100%;
 		max-width: 68em;
 		margin: 0 auto;
-		padding: 0 2.5em;
+		padding: 0 6.75em;
 	}
 
 		@media screen and (max-width: 736px) {
@@ -3329,3 +3333,86 @@
 			}
 
 		}
+
+/* Images Div in text */
+#center {
+padding: 0;
+margin-left: auto;
+margin-right: auto;
+margin-top: 20px;
+text-align: center;
+}
+#center img {
+height: 370px;
+width: 370px;
+vertical-align: middle;
+}
+
+
+/* Sidebar -- NOT USING BELOW THIS YET */
+
+#metadata {
+	margin: 			0px 20px 60px 20px;
+	padding: 			50px 0 0 0;
+	border-top:			1px solid rgb(200,200,200);
+}
+#metadata li {
+	margin-bottom: 		30px;
+}
+#metadata a {
+	font-weight:		400;
+}
+
+/* outside links stay bold (since they aren't to sort terms) */
+#metadata a.outside-link, #resources a, #notes a {
+	font-weight:		600;
+}
+#meta-project-name {
+	display: 			none;		/* activated when "sticking" to top */
+}
+
+/* Artwork */
+
+#artwork {
+	padding: 			0 20px 20px 20px;
+}
+#artwork h1 {
+	margin:				0.75em 0 0.3em 0;
+}
+#artwork p, #experiments p {
+	margin-bottom: 		2em;
+	text-align: 		justify;
+}
+#artwork p+p, #experiments p+p {
+	text-indent: 		2em;
+}
+#artwork img:nth-child(n+2), #artwork img + p {
+	margin-top: 40px;
+}
+.no-indent {
+	text-indent:		0 !important;
+	margin-bottom: 		1em !important;
+}
+.project-link {
+	margin-bottom:		2em;
+}
+.imagesTwoUp {
+	width: 				45%;
+}
+.imagesTwoUp:nth-child(even) {
+	margin-left: 		4%;
+}
+.normalList {
+	margin-top: -0.8em;
+	list-style: disc inside none;
+}
+
+
+
+/* 404 PAGE */
+#page-not-found {
+	text-align:  		center;
+	margin-bottom:  	50px;
+	padding-top: 		30px;
+	line-height:  		4em;
+}

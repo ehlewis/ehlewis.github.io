@@ -28,37 +28,188 @@
 
 							<!-- Logo -->
 								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Evan Lewis</span>
 								</a>
-
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
 
 						</div>
 					</header>
-
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="projects.html">Projects</a></li>
-							<li><a href="elements.html">Elements</a></li>
-						</ul>
-					</nav>
 
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
 							<h1>Transforming Brain Waves</h1>
 							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
-							<p>A few years ago I backed the kickstarter for the <a href='https://www.kickstarter.com/projects/tanttle/emotiv-insight-optimize-your-brain-fitness-and-per'>Emotiv Insight EEG Headset</a>. For some time I've been interested in the way the brain works and its inner workings (as evident in some of my other projects). This headset would let me see, in real time, some of the electrical waves floating around and controlling the brain. I was taken aback by this idea, and it launched a spur of projects for me. The first of which was a trip to the <a href='http://www.xtechexpo.com'>Nuerogaming Conference</a> (now the Experiential Technology Conference + Expo) in San Fransisco. It was here that I was first immersed in the rapidly expanding technologies for new ways to interect with computers such as virtual reality and haptic feedback. One such technology that left one of the more significant impacts on me from the concert came from a Sony experimental development lab. They brought with them a PlayStation 3 running the game (insert), which is not interesting in its self, but attached to the PlayStation was an infrared eye tracking device. They had written code which allowed it to interface with the PlayStation and act as its camera controller. I sat down and the people running the booth gave me a controller and calibrated the sensor to my eyes. In less than a minute I was playing the game with the contoller, minus the camera joystick. In the game you were able to fire a projectile of lightning. Going into it I figured that there would be reasonable control and that I would be able to play moderatly well, landing the lightning near where my eyes were looking. I was taken aback by the accuracy to which it tracked exactly where my eyes were looking. I decided to test its limits and aimed for the smallest, farthest away object that I could see and to my disbelief the lightning hit it exactly where I was aiming.
-							Also at this conference I met the developer of the game <a href='http://steamcommunity.com/sharedfiles/filedetails/?id=202579788'>Throw Trucks With Your Mind</a>, Lat Ware. He showed me how the brain could be used as its own game controller. In the game, you focus or relax to pickup and throw trucks. This idea got me thinking about other potential uses.</p>
+							<p>A few years ago I backed the kickstarter for the <a href='https://www.kickstarter.com/projects/tanttle/emotiv-insight-optimize-your-brain-fitness-and-per'>Emotiv Insight EEG Headset</a>. For some time I've been interested in the way the brain works and its inner workings (as evident in some of my other projects). This headset would let me see, in real time, seven channels of the electrical waves floating around and controlling the brain. I took this idea and surveyed the directions that I could explore with this new technology. This lead me to the <a href='http://www.xtechexpo.com'>Nuerogaming Conference</a> (now the Experiential Technology Conference + Expo) in San Fransisco. It was here that I was first immersed in the rapidly expanding technologies for new ways to interect with computers such as virtual reality and haptic feedback. <!--One such technology that left one of the more significant impacts on me from the concert came from a Sony experimental development lab. They brought with them a PlayStation 3 running the game (insert), which is not interesting in its self, but attached to the PlayStation was an infrared eye tracking device. They had written code which allowed it to interface with the PlayStation and act as its camera controller. I sat down and the people running the booth gave me a controller and calibrated the sensor to my eyes. In less than a minute I was playing the game with the contoller, minus the camera joystick. In the game you were able to fire a projectile of lightning. Going into it I figured that there would be reasonable control and that I would be able to play moderatly well, landing the lightning near where my eyes were looking. I was taken aback by the accuracy to which it tracked exactly where my eyes were looking. I decided to test its limits and aimed for the smallest, farthest away object that I could see and to my disbelief the lightning hit it exactly where I was aiming. -->
+							Also at this conference I met the developer of the game <a href='http://steamcommunity.com/sharedfiles/filedetails/?id=202579788'>Throw Trucks With Your Mind</a>, Lat Ware. He showed me how the brain could be used as its own game controller. In the game, you focus or relax to pickup and throw trucks, another potential use for the software.</p>
 							<p>Although the reslease of the Emotiv Insight was delayed a year or two, it eventually arrived. Initially, the support for it wasn't all that useful and was lacking, so I let it sit for a couple years and just picked it back up when I moved into my dorm. I rememebred that I was able to access and record the raw EEG signals before they were processed. I needed to find a way to record these raw EEG samples and record them as a comma separated values file. I found a code sample that was provided in the documentation and adapted it so that it would be a bit more tailored to my uses. Once I had the raw data recorded into a file, I decided that I wanted to try to make something visually interesting. I wanted to find a way to physically express something very abstract that occurs every second within us and makes us conscious. To do this I employed the use of the powerful 3D modeling program Autodesk Maya. Maya has a built in API with support for Python that allows us to perform any function within the program from within a script. Using the API documentation, I was able to piece together a script that would parse through the CSV file that contained the EEG file and then plot the points along a plane to create the waves in 3D. For the first version of the script I created a 3D box with the top of it being composed of the waves which I then 3D printed. I decided to continue working on the project and add an animation component. I created a function that showed the waves fluttering over a plane, making it look similar to a flag billowing in the wind.</p>
+						<pre><code>
+import maya.cmds as cmds
+#SWITCH OVER TO FOR LOOPS
+
+
+DATA = []
+LENGTH = 0
+TOTALCHANNELS = 0
+
+def intake():
+global DATA, LENGTH, TOTALCHANNELS
+filename = raw_input('Path to CSV file')
+input_file = open(filename, 'r')
+TOTALCHANNELS = int(raw_input('# of channels'))
+
+temp = ''
+currNum = ''
+for line in input_file:  # Get one line at a time.
+    if LENGTH == 0:
+        LENGTH = LENGTH + 1
+    else:
+        DATA.append([])
+        for i in range(len(line)):
+            if line[i].isdigit() or str(line[i]) == ".":
+                currNum = currNum + str(line[i])
+            elif currNum != '':
+                DATA[LENGTH-1] += [float(currNum)]
+                currNum = ''
+            else:
+				currNum = ''
+        LENGTH += 1
+print(LENGTH)
+
+
+def createPlanes():
+global LENGTH
+total = LENGTH
+pos = 0
+input_file.close()
+while total > 1000:
+    waves = cmds.polyPlane(w=10, h=1, sx=1000, sy=7)
+    cmds.move( 10*pos, x=True )
+    pos += 1
+    total -= 1000
+
+waves = cmds.polyPlane(w=10, h=1, sx=total, sy=7)
+cmds.move( 10*pos, x=True )
+
+def impressOnPlanes():
+global DATA, LENGTH, TOTALCHANNELS
+discon = i = x = channel =0
+pplane = 1
+KMult = 1000
+while channel < TOTALCHANNELS:
+    while i < LENGTH-1:
+          if i % (1000 + discon) == 0 and i != 0: #the discon only affects channel rows not x rows between planes
+              pplane += 1
+              x = KMult + discon
+          cmds.select("pPlane" + str(pplane) + ".vtx[" + str(x+1) + "]")
+          cmds.move( (DATA[i][channel]/100), y=True )
+          i += 1
+          x += 1
+    discon += 1
+    channel += 1
+    KMult += 1000
+    i = 0
+    x = KMult + discon
+    pplane = 1
+
+def createCurve(channel, offset = 0):
+global DATA, LENGTH
+channelData = []
+for i in range(LENGTH-1):
+    channelData.append((float(i), DATA[i][channel]/100, float(offset)))
+print (channelData)
+#cmds.curve(p=[(0, 0, 0), (3, 5, 6), (5, 6, 7), (9, 9, 9)])
+cmds.curve(p=channelData)
+
+def createCurveAllChannels():
+global TOTALCHANNELS
+for i in range(TOTALCHANNELS): #idk whats wrong here   if 5 channels its out of range after the 5th curve but if its 5-1 only 4 are made
+    createCurve(i - 1, i)
+
+def revolve():
+#revolve the first (hopefully only) curve made
+cmds.revolve('curve1', ax=(1, 0, 0), p=(0, 0, 0))
+
+def loft(channels = 5):
+#select curves and loft them
+if channels == 2:
+    cmds.loft('curve1', 'curve2', ch=True, rn=True, ar=True)
+elif channels == 3:
+    cmds.loft('curve1', 'curve2', 'curve3', ch=True, rn=True, ar=True)
+elif channels == 4:
+    cmds.loft('curve1', 'curve2', 'curve3', 'curve4', ch=True, rn=True, ar=True)
+elif channels == 5:
+    cmds.loft('curve1', 'curve2', 'curve3', 'curve4', 'curve5', ch=True, rn=True, ar=True)
+elif channels == 6:
+    cmds.loft('curve1', 'curve2', 'curve3', 'curve4', 'curve5', 'curve6', ch=True, rn=True, ar=True)
+elif channels == 7:
+    cmds.loft('curve1', 'curve2', 'curve3', 'curve4', 'curve5', 'curve6', 'curve7', ch=True, rn=True, ar=True)
+elif channels == 8:
+    cmds.loft('curve1', 'curve2', 'curve3', 'curve4', 'curve5', 'curve6', 'curve7', 'curve8', ch=True, rn=True, ar=True)
+
+
+def modularRefreshPlane(start, end, pplane = 1): #not in use
+global DATA, LENGTH, TOTALCHANNELS
+i = start
+channel = 0
+vertCounter = 0
+while channel < TOTALCHANNELS:
+    while i < end:
+        cmds.select("pPlane" + str(pplane) + ".vtx[" + str(vertCounter) + "]")
+        cmds.move((DATA[i][channel] / 100), y=True)
+        i += 1
+        vertCounter += 1
+        print("vertcounter" + str(vertCounter))
+        print("i" + str(i))
+    print("channel" + str(channel))
+    channel += 1
+    i = start
+vertCounter = 0
+
+def modularRefreshPlaneAndKey(start, end, timesRan = 1):
+global DATA, LENGTH, TOTALCHANNELS
+i = start
+channel = 0
+vertCounter = 0
+while channel < TOTALCHANNELS:
+    while i < end:
+        cmds.select("pPlane1" + ".vtx[" + str(vertCounter) + "]") #only works for pPlane1
+        cmds.move((DATA[i][channel] / 100), y=True)
+        keySelected(timesRan)
+        i += 1
+        vertCounter += 1
+    channel += 1
+    i = start
+vertCounter = 0
+
+
+def keySelected(frame = 0):
+cmds.setKeyframe(time=frame)
+
+def animate(planeLength = 20, channels = 4, animationLength = 200, start = 0): #totalFrames should be global length but how do I make that call in the function declaration
+global DATA, LENGTH, TOTALCHANNELS
+waves = cmds.polyPlane(w=planeLength - 1, h=2, sx=planeLength - 1, sy=channels) #H is width
+end = planeLength
+pplane = 1
+frame = 1
+totalFrames = 0
+
+while end < animationLength:
+    modularRefreshPlaneAndKey(start, end, start + 1)
+    start += 1
+    end += 1
+
+
+
+'''
+intake()
+createPlanes()
+impressOnPlanes()
+channel = int(raw_input('Which channel?'))'''
+intake()
+animate()
+#animate(20, 4, 200, 10)
+						</code></pre>
+						<p></p>
 						</div>
 					</div>
 
@@ -77,7 +228,7 @@
 						<div class="inner">
 							<section>
 								<ul class="copyright">
-								<li>&copy; Evan Lewis | All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; Evan Lewis | All rights reserved</li>
 								</ul>
 							</section>
 						</div>

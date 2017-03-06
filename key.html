@@ -17,6 +17,7 @@
 
 		</script>
 
+
 	</head>
 	<body>
 		<!-- Wrapper -->
@@ -28,39 +29,74 @@
 
 							<!-- Logo -->
 								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Evan Lewis</span>
 								</a>
-
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
 
 						</div>
 					</header>
 
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<!--
-							<li><a href="projects.html">Projects</a></li>
-							<li><a href="elements.html">Elements</a></li>
-							-->
-						</ul>
-					</nav>
-
-				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1>Keyt2hulhu</h1>
+							<h1>Keythulhu</h1>
 							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
 							<p>1</p>
+
+							<!-- 3D viewer -->
+							<div id="center">
+								<script src="scripts/three.min.js"></script>
+								<script src="scripts/OrbitControls.js"></script>
+
+								<script>
+									// Scene setup
+									var scene = new THREE.Scene();
+									var camera = new THREE.PerspectiveCamera( 75, 500/500, 1, 1000 );
+									controls = new THREE.OrbitControls( camera );
+									controls.enableZoom = false;
+									controls.minDistance = 40;
+									controls.maxDistance = 40;
+									controls.addEventListener( 'change', render );
+									camera.position.z = 40;
+
+									// Lights
+									var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+									var spotLight = new THREE.SpotLight(0xffffff);
+									spotLight.position.set(40, 40, 40);
+									spotLight.castShadow = true;
+									scene.add(ambientLight);
+									scene.add(spotLight);
+
+									// Background and renderer
+									scene.background = new THREE.Color( 0xf2f2f2 ); //Background color
+									var renderer = new THREE.WebGLRenderer();
+									renderer.setSize( 500, 500 );
+    							document.getElementById("center").appendChild( renderer.domElement );
+
+									var loader = new THREE.JSONLoader();
+									loader.load('models/octoout.js', function ( geometry, materials ) {
+											console.log("finished");
+											var material = new THREE.MultiMaterial( materials );
+											var object = new THREE.SkinnedMesh( geometry, material );
+
+											object.position.setY(-10);
+											object.position.setZ(10);
+
+											scene.add( object );
+										}
+									);
+
+
+									var render = function () {
+										requestAnimationFrame( render );
+										camera.lookAt( scene.position );
+										renderer.render(scene, camera);
+									};
+
+									controls.addEventListener( 'change', render());
+								</script>
+								<p>Final key model sent for printing</p>
+							</div>
+
 							<p>2</p>
-							<p>3</p>
 						</div>
 					</div>
 
@@ -79,7 +115,7 @@
 						<div class="inner">
 							<section>
 								<ul class="copyright">
-								<li>&copy; Evan Lewis | All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; Evan Lewis | All rights reserved</li>
 								</ul>
 							</section>
 						</div>
@@ -91,7 +127,6 @@
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
 
 	</body>
