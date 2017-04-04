@@ -39,7 +39,12 @@
 						<div class="inner">
 							<h1>Keythulhu</h1>
 							<span class="image main"><img src="images/pic13.jpg" alt="" /></span>
-							<p>1</p>
+							<p>This project started by finding a blank 3D model of a standard keycap for a mechanical keyboard to model around. With the blank form I started working on a rough looking octopus as my kepcap topper. As more detail was added it was fitted better in form around the cap. In order to pose the tenticles I needed to find a way through which they could be easily adjusted without me having to pose each vertex in order to keep the curves smooth. In order to do this I took a page out of the animation book. Each tenticle is rigged with what are known as "bones". These bones each control a certain portion of the mesh with a certain weight. This way when the mesh is deformed by the bone controls it looks very natrual and has no sharp edges. The other benefit of this method of posing is that it allows me to reuse and repose the model in any way I want.</p>
+							<!--<div id="center">
+								<img src=""/>
+								<p>Bone rigging</p>
+							</div>-->
+							<p>Once I had the octopus posed the way I wanted and fitted around the keycap, I merged the two models into one singular model. This is an important step in 3D printing that both reduces the amount of material used and prevents the two models from accidentally separating after printing. I then checked the model for errors and, having not seen any, sent it to be printed at <a href="https://www.shapeways.com/product/HEF36F3JJ/keythulhu">Shapeways</a>.</p>
 
 							<!-- 3D viewer -->
 							<div id="center">
@@ -51,9 +56,9 @@
 									var scene = new THREE.Scene();
 									var camera = new THREE.PerspectiveCamera( 75, 500/500, 1, 1000 );
 									controls = new THREE.OrbitControls( camera );
-									controls.enableZoom = false;
-									controls.minDistance = 40;
-									controls.maxDistance = 40;
+									//controls.enableZoom = false;
+									//controls.minDistance = 40;
+									//controls.maxDistance = 40;
 									controls.addEventListener( 'change', render );
 									camera.position.z = 40;
 
@@ -72,7 +77,7 @@
     							document.getElementById("center").appendChild( renderer.domElement );
 
 									var loader = new THREE.JSONLoader();
-									loader.load('models/octoout.js', function ( geometry, materials ) {
+									loader.load('models/key.js', function ( geometry, materials ) { //CONVERT KEY FROM FBX
 											console.log("finished");
 											var material = new THREE.MultiMaterial( materials );
 											var object = new THREE.SkinnedMesh( geometry, material );
@@ -95,8 +100,6 @@
 								</script>
 								<p>Final key model sent for printing</p>
 							</div>
-
-							<p>2</p>
 						</div>
 					</div>
 

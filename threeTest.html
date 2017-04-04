@@ -54,6 +54,15 @@
 				}
 			);
 
+			var loader = new THREE.JSONLoader();
+			loader.load('models/key.js', function ( geometry, materials ) {
+					console.log("finished");
+					var material = new THREE.MultiMaterial( materials );
+					var object = new THREE.SkinnedMesh( geometry, material );
+					scene.add( object );
+				}
+			);
+
 			var render = function () {
 				requestAnimationFrame( render );
 				//object.rotation.x += .01;
