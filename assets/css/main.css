@@ -3343,8 +3343,10 @@ margin-top: 20px;
 text-align: center;
 }
 #center img {
-height: 370px;
-width: 370px;
+/*height: 370px;
+width: 370px;*/
+height: auto;
+max-width: 370px;
 vertical-align: middle;
 }
 
