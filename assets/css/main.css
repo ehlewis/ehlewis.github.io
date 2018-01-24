@@ -220,6 +220,9 @@
 		border: 0;
 		display: inline-block;
 		position: relative;
+
+		background-color: #797b7f;
+
 	}
 
 		.image img {
@@ -413,10 +416,13 @@
 						margin-bottom: 0;
 					}
 
-			.tiles article.tile > .image:before {
+			/* .tiles article.tile > .image:before {
 				background-color: #797b7f;
-			}
+			} */
 
+			.tiles article.tile > .image:before {
+				background-color: inherit;
+			}
 
 			body:not(.is-touch) .tiles article:hover > .image {
 				-moz-transform: scale(1.1);
