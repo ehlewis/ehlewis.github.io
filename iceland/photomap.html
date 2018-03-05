@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Evan Lewis | Photo Map</title>
+    <link rel="stylesheet" href="../assets/css/map.css" />
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8dY2_kYBjp9YLMv7wz9Fhzhn0ztZK66A&callback=initMap">
+    </script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+    <script src="../assets/js/markerclusterer.js"></script>
+  </head>
+
+<body>
+        <div id="map"></div>
+</body>
+
+<script>
+var map, popup, Popup;
+
+var markers = [];
+
+
+/** Initializes the map and the custom popup. */
+function initMap() {
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 64.9, lng: -18.4},
+    zoom: 7,
+    maxZoom: 18,
+    zoomControl: false,
+    scaleControl: false
+  });
+
+  populateMap();
+
+}
+
+function populateMap() {
+    $.ajax({
+        dataType: "json",
+        url: 'gpsIcons/data.json',
+        beforeSend: function(xhr){
+            if (xhr.overrideMimeType) {
+                xhr.overrideMimeType("application/json");
+            }
+        },
+        success: function(data) {
+            console.log(data);
+            if (typeof data !== "undefined") {
+                 $.each(data, function(i, f) {
+
+                    var latLng = new google.maps.LatLng(data[i].lat, data[i].lon);
+                    //var pin = new google.maps.Marker({'position': latLng});
+                    var iconName = "gpsIcons/"+data[i].name;
+                    var image = {
+                        url: iconName, // image is 512 x 512
+                        scaledSize: new google.maps.Size(80, 60),
+                    };
+
+                    var pin = new google.maps.Marker({
+                        'position': latLng,
+                        'icon': image,
+                    });
+
+                    //OR
+
+                    /*var pin = new google.maps.Marker({
+                        'position': latLng,
+                    });*/
+
+
+                    //var content = "<img src=\"gpsFullsize/" + data[i].name + "\" alt=\"\" style=\"max-height: 500px;\"/>"
+                    var content = "<img src=\"http://keithlewisstudio.com/EvansPhotos/" + data[i].name + "\" alt=\"\" style=\"max-height: 500px;\"/>"
+
+
+                    var infowindow = new google.maps.InfoWindow();
+
+                    google.maps.event.addListener(pin,'click', (function(pin,content,infowindow){
+                        return function() {
+                           infowindow.setContent(content);
+                           infowindow.open(map,pin);
+                        };
+                    })(pin,content,infowindow));
+
+                    markers.push(pin);
+                });
+                var options = {
+                        imagePath: '../assets/mapIcons/m',
+                        maxZoom: 15,
+                };
+                console.log(markers);
+                var markerCluster = new MarkerClusterer(map, markers, options);
+                console.log(markerCluster);
+            }
+        },
+        error: function (request, status, error) {
+            alert(request.responseText);
+            alert(error);
+        }
+    });
+}
+
+    </script>
+
+  <!--</body>-->
+</html>
