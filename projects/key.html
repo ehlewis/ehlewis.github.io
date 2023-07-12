@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Evan Lewis | Keythulhu</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-92519809-1', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+
+
+    </head>
+    <body>
+        <!-- Wrapper -->
+            <div id="wrapper">
+
+                <!-- Header -->
+                    <header id="header">
+                        <div class="inner">
+
+                            <!-- Logo -->
+                                <a href="index.html" class="logo">
+                                    <span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">EHL</span>
+                                </a>
+
+                        </div>
+                    </header>
+
+                    <div id="main">
+                        <div class="inner">
+                            <h1>Keythulhu</h1>
+                        </br>
+                            <!--<span class="image main"><img src="images/pic13.jpg" alt="" /></span> -->
+                            <p>When I built my second computer I decided to use a mechanical keyboard as had been recommended to me. After having tested out a few I decided upon the Quickfire TK as it was compact, still had a 10-key pad, and fit my computer's color scheme. I got the idea that since the keycaps were removable, it would be relatively easy to make a custom keycap that would help personalize an otherwise generic peripheral. The keycap started by finding a 3D model of a factory specification, generic, blank keycap to form my model around. With this template I started working on a rough looking octopus as my key topper.
+                            <!--<div id="center">
+                                    <img src="roughOcto.jpg"/>
+                                </div>
+                            -->
+                        </br> </br>
+                            As more detail was added it was fitted better in form around the cap. In order to pose the tentacles, I needed to find a way through which they could be easily adjusted without me having to pose each vertex in order to keep the curves smooth. In order to do this I took a page out of the animation book. Each tentacle is rigged with what are known as "bones". These bones each control a certain portion of the mesh with a certain weight. This way when the mesh is deformed by the bone controls it looks very natural and has no sharp edges. The other benefit of this method of posing is that it allows me to reuse and repose the model in any way I want since this is the same way that characters used in animated movies are created.</p>
+                            <!-- <div id="center">
+                                <img src="bones.jpg"/>
+                                <p>Bone rigging</p>
+                            </div> -->
+                            <p>Once I had the octopus posed the way I wanted and fitted around the keycap, I merged the two models into one singular model. This is an important step in 3D printing that both reduces the amount of material used and prevents the two models from accidentally separating after printing. I then checked the model for errors sent it to be printed at <a href="https://www.shapeways.com/product/HEF36F3JJ/keythulhu">Shapeways</a>.</p>
+
+                            <!-- 3D viewer -->
+                            <div id="center">
+                                <script src="scripts/three.min.js"></script>
+                                <script src="scripts/OrbitControls.js"></script>
+
+                                <script>
+                                    /*// Scene setup
+                                    var scene = new THREE.Scene();
+                                    var camera = new THREE.PerspectiveCamera( 75, 500/500, 1, 1000 );
+                                    controls = new THREE.OrbitControls( camera );
+                                    //controls.enableZoom = false;
+                                    //controls.minDistance = 40;
+                                    //controls.maxDistance = 40;
+                                    controls.addEventListener( 'change', render );
+                                    camera.position.z = 40;
+
+                                    // Lights
+                                    var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+                                    var spotLight = new THREE.SpotLight(0xffffff);
+                                    spotLight.position.set(40, 40, 40);
+                                    spotLight.castShadow = true;
+                                    scene.add(ambientLight);
+                                    scene.add(spotLight);
+
+                                    // Background and renderer
+                                    scene.background = new THREE.Color( 0xf2f2f2 ); //Background color
+                                    var renderer = new THREE.WebGLRenderer();
+                                    renderer.setSize( 500, 500 );
+                                document.getElementById("center").appendChild( renderer.domElement );
+
+                                    var loader = new THREE.JSONLoader();
+                                    loader.load('models/key.js', function ( geometry, materials ) { //CONVERT KEY FROM FBX
+                                            console.log("finished");
+                                            var material = new THREE.MultiMaterial( materials );
+                                            var object = new THREE.SkinnedMesh( geometry, material );
+
+                                            object.position.setY(-10);
+                                            object.position.setZ(10);
+
+                                            scene.add( object );
+                                        }
+                                    );
+
+
+                                    var render = function () {
+                                        requestAnimationFrame( render );
+                                        camera.lookAt( scene.position );
+                                        renderer.render(scene, camera);
+                                    };
+
+                                    controls.addEventListener( 'change', render());*/
+                                </script>
+                                <iframe width="512" height="564" frameborder="0" allowfullscreen allowtransparency src="https://www.shapeways.com/fragments/product?spin=HEF36F3JJ"></iframe>
+                                <p>Final key model sent for printing</p>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Footer -->
+                <footer id="footer">
+                    <div class="inner">
+                        <section>
+                            <div id="center">
+                                <p style="margin:0">Get in touch</p>
+                                <a href="https://github.com/ehlewis" class="icon style2 fa-github"><span class="label">GitHub |</span></a>
+                                <!--<a href="tel:" class="icon style2 fa-phone"><span class="label">Phone |</span></a></li>-->
+                                <a href="mailto:ehlewis@me.com?Subject=Website" class="icon style2 fa-envelope-o"><span class="label"> Email</span></a>
+
+                            </div>
+                        </section>
+                    </div>
+                    <p></p>
+
+                    <div class="inner">
+                        <section>
+                            <ul class="copyright">
+                                <li>&copy; Evan Lewis | All rights reserved</li>
+                            </ul>
+                        </section>
+                    </div>
+                </footer>
+
+            </div>
+
+        <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/skel.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <script src="assets/js/main.js"></script>
+
+    </body>
+</html>
