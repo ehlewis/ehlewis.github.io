@@ -2,7 +2,7 @@
 # General
 --------------------------------------------------------------*/
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: #272829; /*#f2f2f2*/
 }
 
@@ -22,7 +22,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Raleway", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -120,7 +120,8 @@ h6 {
 }
 
 #main {
-  margin-left: 300px;
+  margin-left: 400px;
+  margin-right: 50px;
 }
 
 .container,
@@ -313,9 +314,8 @@ section {
 
 .section-title h2 {
   font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
   position: relative;
   color: #173b6c;
 }
@@ -324,7 +324,7 @@ section {
   content: "";
   position: absolute;
   display: block;
-  width: 50px;
+  width: 100%;
   height: 3px;
   background: #149ddd;
   bottom: 0;
