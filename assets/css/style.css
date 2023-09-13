@@ -4,11 +4,16 @@
 body {
   font-family: "Montserrat", sans-serif;
   color: #272829; /*#f2f2f2*/
+  background: #345539;
 }
 
 a {
   color: #149ddd;
   text-decoration: none;
+}
+
+p{
+  color: #fff;
 }
 
 a:hover {
@@ -66,12 +71,12 @@ h6 {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 45%;
   transition: all ease-in-out 0.5s;
   z-index: 9997;
   transition: all 0.5s;
   padding: 0 15px;
-  background: #ffffff; /*#040b14; */
+  background: #345539; /*#040b14; */
   overflow-y: auto;
 }
 
@@ -83,7 +88,7 @@ h6 {
 }
 
 #header .profile h1 {
-  font-size: 24px;
+  font-size: 65px;
   margin: 0;
   padding: 0;
   font-weight: 500;
@@ -96,11 +101,12 @@ h6 {
   padding-left: 10px;
   font-weight: 5;
   font-family: "Montserrat", sans-serif;
+  color: #fff;
 }
 
 #header .profile h1 a,
 #header .profile h1 a:hover {
-  color: #333333; /*#fff;*/
+  color: #fff;
   text-decoration: none;
 }
 
@@ -126,8 +132,9 @@ h6 {
 }
 
 #main {
-  margin-left: 350px;
-  margin-right: 50px;
+  background: #345539;
+  margin-left: 45%;
+  margin-right: 10%;
 }
 
 .container,
@@ -164,6 +171,7 @@ h6 {
   margin: 0;
   padding: 0;
   list-style: none;
+  color: #fff;
 }
 
 .nav-menu>ul>li {
@@ -180,7 +188,7 @@ h6 {
   padding: 12px 15px;
   margin-bottom: 8px;
   transition: 0.3s;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .nav-menu a i,
@@ -324,7 +332,7 @@ section {
   margin-bottom: 10px;
   padding-bottom: 10px;
   position: relative;
-  color: #173b6c;
+  color: #fff;
 }
 
 .section-title h2::after {
@@ -333,7 +341,7 @@ section {
   display: block;
   width: 100%;
   height: 3px;
-  background: #149ddd;
+  background: #fff;
   bottom: 0;
   left: 0;
 }
@@ -348,7 +356,7 @@ section {
 .about .content h3 {
   font-weight: 700;
   font-size: 26px;
-  color: #173b6c;
+  color: #fff;
 }
 
 .about .content ul {
@@ -429,7 +437,7 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Akills
+# Skills
 --------------------------------------------------------------*/
 .skills .progress {
   height: 60px;
@@ -473,13 +481,13 @@ section {
   font-weight: 700;
   margin-top: 20px;
   margin-bottom: 20px;
-  color: #050d18;
+  color: #fff;
 }
 
 .resume .resume-item {
   padding: 0 0 20px 20px;
   margin-top: -2px;
-  border-left: 2px solid #1f5297;
+  border-left: 2px solid #fff;
   position: relative;
 }
 
@@ -489,7 +497,7 @@ section {
   font-weight: 600;
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
-  color: #050d18;
+  color: #fff;
   margin-bottom: 10px;
 }
 
@@ -508,6 +516,7 @@ section {
 
 .resume .resume-item ul li {
   padding-bottom: 10px;
+  color: #fff;
 }
 
 .resume .resume-item:last-child {
@@ -523,7 +532,7 @@ section {
   left: -9px;
   top: 0;
   background: #fff;
-  border: 2px solid #1f5297;
+  border: 2px solid #fff;
 }
 
 .resume .download i {
