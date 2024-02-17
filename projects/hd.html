@@ -1,0 +1,72 @@
+When I was a child, long before I could comprehend what a computer actually was, I was pressing the buttons on my fathers laptop. It was a late 1990's Toshiba T3300SL. Eventually however, I figured out some input which turned the machine into a brick. It would no longer boot and didn't seem to recognize its hard drive. Apparently there wasn't enough important information on the hard drive to warrant attempting to find the fault and repair the machine, so it went to the wayside and became a prop in my childhood play antics. As such, it endured a lot of rough handling in the years following. I distinctly rememeber it falling off of a counter a not-insignificant number of times. Eventually, it ended up on my bedroom shelf and sat there until it came time to move out of that house in 2017. Now in college studying computer science, when I saw the machine I thought that surely I was better with computers than a toddler and could return the drive to a working state at least for long enough to recover its contents onto a new drive.
+
+Dissasembly
+
+<img href="/assets/content/hd/IMG_7844.png"></img>
+Appear to be some hand wired connections on top of some of the chips jumping pins
+
+Unfortunately, many photos in this writeup are pictures taken of screens. I know this is sacralidge, but I didn't take on this project with the goal of creating a writeup and was also doing the majority of this work on live USB based systems.
+
+The first step as always was to look on Amazon to see if I could get an adapter overnighted to me in order to fufill the instant gratification i was seeking on what I thought would be a fairly easy project. I pictured the workflow would shape up to be along the lines of 
+1) Plug in hard drive
+2) Use a program to read all of the bytes rather than trying to mount the drive as I figured when I was a child I may have overwritten the partition table and the drive had a small enough capacity for this to be a feasable course of action
+3) Reconstruct the files based on the data that was scraped off
+
+Once the 44 pin IDE to USB adapter arrived, I plugged it in and connected the drive to my Mac. The good news was that it appeared to power on and sounded like it was spinning up. Unfortunately the drive wasnt recognized so I switched it to my Windows desktop. On Windows, the drive wouldn't mount but it was detected by the Device Manager, alebiet with the disk size being misinterpreted as being 2.20 terabytes.
+<img href="/assets/content/hd/dev_manager.png"></img>
+
+Tried some new distros to see if one of them had drivers which interfaced better with the hard drive
+<img href="/assets/content/hd/IMG_7853.png"></img>
+
+After taking a break on the project, when I plugged the drive back in it would start for a few seconds and then power its self off.
+I searched for the issue to see if anyone had come across a similar issue. It sounded like Conner drives have an issue with the read arm bumpers becoming sticky. This was the first major roadblock in the project. Everyone always says that hard drives are ruined as soon as you open the case and expose the platters to air. However, if I didn't do this then there was no chance at all of recovering the data, so it was a risk I needed to take. After unscrewing and opening the platter case I tried to move the arm and it was indeed stuck. Using a hex key in one of the holes of the arm, I broke the arm free so that it could move on its own power again. Guides online suggested covering the sticky rubber bumpers with something like a small piece of painters tape, but I didn't have the piece needed to disassemble the arm assembly enough to access the bumpers so I just relied on the arm being moved frequently enough to not adhead to its self again.
+<img href="/assets/content/hd/IMG_7847.mov"></img>
+
+
+I started playing around with hard drive recovery tools that people were recommending online. Some worked better than others, many didnt detect the drive at all. DMDE was by far the best of the ones I had worked with.
+Using DMDE, I began scraping the drive block by block in order to override any software/firmware partitioning issue which I may have destroyed
+The results began to show readble strings starting at LBA 525/Block 515. 
+<img href="/assets/content/hd/IMG_7850.png"></img>
+<img href="/assets/content/hd/IMG_7851.png"></img>
+
+Soon I started seeing some executables being discovered
+
+<img href="/assets/content/hd/exe_dump.png"></img>
+
+There were large chunks inside of the exe's of the following string:
+
+    oCnnreP repieharsl8 M4 B -PC0248        
+
+This is an interesting string as it has a lot of understandable info, but contains a number of out of order characters. It should read 
+
+Conner Peripherals 84MB -PC2048
+
+Also, why is this string being repeated so frequently and where is it coming from?
+
+DMDE was able to detect a 85mb partition inside of the alleged 2.2tb drive, indicating that the partition table may be intact
+<img href="/assets/content/hd/IMG_7855.png"></img>
+
+I spent some time reading the available documentation about the hard drive to check the pinout to see if it perhaps wasn't getting enough power to read the correct segments. Then I noticed that the documentation noted the size of the cylinders, heads, and sectors. This made me realize that the firmware is expecting to get requests in Cylinder Head Sector (CHS) format rather than the more modern Logical Blcok Addressing (LBA)
+
+
+Got a PCI to 40 pin IDE adapter card chained into a 40 pin IDE to 44 pin IDE female plug. The 44 pin IDE needs a +5v connection on the upper 4 pins in order to power the drive. The 40 to 44 pin adapter allowed for a Molex connection from the power supply to provide the +5v.
+
+I used a cable from another PSU, plugged in the drive, turned on the host computer, and released some of the magic smoke from the back of the controller board. Trying to figure out what went wrong, I checked the molex with my multimeter and the +5v was providing +12v and the +12v was providing +3.3v.
+In a last ditch effort, I disassembled the hard drive to get a better look at the controller board, hoping that the board had some sort of overvoltage protection or sacraficial component which I would be able to replace in order to get the board functioning again. Unfortunately, overvoltage didnt seem to be a consideration that the developers had in mind, and it was some chip that got fried but didn't seem to have left any burn marks to narrow down which one.
+
+Found a new hard drive to use as a PCB donor online in Australia.
+
+<img href="/assets/content/hd/IMG_8510.JPG"></img>
+<img href="/assets/content/hd/IMG_8511.JPG"></img>
+
+
+
+<img href="/assets/content/hd/IMG_8513.JPG"></img>
+
+
+Plugged in and in my excitement started running DMDE's autodiscover feature. As results were being pulled, I realized that I should just open file explorer and see if it mounted.
+To my suprise it had actually mounted successfully to Windows. I dragged all of the files over to create a copy on my more reliable SSD.
+
+I suppose that I have originally damaged the boot table
+
+TLDR: If your 84mb hard drive shows up as 2.2tb, connect it directly to the motherboard using IDE
