@@ -7,8 +7,8 @@ Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-
 --------------------------------------------------------------*/
 body {
   font-family: "Montserrat", sans-serif;
-  color: #ffff; /*#f2f2f2*/
-  background: #345539;
+  color: #000;/*#ffff; #f2f2f2*/
+  background: #ffff; /*#345539*/
 }
 
 img{
@@ -28,7 +28,7 @@ a {
 }
 
 p{
-  color: #fff;
+  color: #000;/*#fff;*/
   line-height: 1.5;
 }
 
@@ -71,7 +71,7 @@ h6 {
 
 .back-to-top:hover {
   background: #2eafec;
-  color: #fff;
+  color: #000;
 }
 
 .back-to-top.active {
@@ -92,7 +92,7 @@ h6 {
   z-index: 9997;
   transition: all 0.5s;
   padding: 0 15px;
-  background: #345539; /*#040b14; */
+  background: #fff; /*#345539 #040b14; */
   overflow-y: auto;
 }
 
@@ -117,20 +117,20 @@ h6 {
   padding-left: 10px;
   font-weight: 5;
   font-family: "Montserrat", sans-serif;
-  color: #fff;
+  color: #000;
 }
 
 #header .profile h1 a,
 #header .profile h1 a:hover {
-  color: #fff;
+  color: #000;
   text-decoration: none;
 }
 
 #header .profile .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: #212431;
-  color: #fff;
+  background: #fff;
+  color: #000;
   line-height: 1;
   padding: 8px 0;
   margin-right: 4px;
@@ -143,18 +143,19 @@ h6 {
 
 #header .profile .social-links a:hover {
   background: #149ddd;
-  color: #fff;
+  color: #000;
   text-decoration: none;
 }
 
 #main {
-  background: #345539;
+  background: #fff; /*#345539;*/
   margin-left: 30%;
   margin-right: 10%;
 }
 
 .container,
 .container-fluid {
+  background: white;
   padding-left: 30px;
   padding-right: 30px;
 }
@@ -187,7 +188,7 @@ h6 {
   margin: 0;
   padding: 0;
   list-style: none;
-  color: #fff;
+  color: #000;
 }
 
 .nav-menu>ul>li {
@@ -291,18 +292,18 @@ h6 {
   font-size: 64px;
   font-weight: 700;
   line-height: 56px;
-  color: #fff;
+  color: #000;
 }
 
 #hero p {
-  color: #fff;
+  color: #000;
   margin-bottom: 50px;
   font-size: 35px;
   font-family: "Poppins", sans-serif;
 }
 
 #hero p span {
-  color: #fff;
+  color: #000;
   padding-bottom: 4px;
   letter-spacing: 1px;
   border-bottom: 3px solid #149ddd;
@@ -348,7 +349,7 @@ section {
   margin-bottom: 10px;
   padding-bottom: 10px;
   position: relative;
-  color: #fff;
+  color: #000;
 }
 
 .section-title h2::after {
@@ -372,7 +373,7 @@ section {
 .about .content h3 {
   font-weight: 700;
   font-size: 26px;
-  color: #fff;
+  color: #000;
 }
 
 .about .content ul {
@@ -497,13 +498,13 @@ section {
   font-weight: 700;
   margin-top: 20px;
   margin-bottom: 20px;
-  color: #fff;
+  color: #000;
 }
 
 .resume .resume-item {
   padding: 0 0 20px 20px;
   margin-top: -2px;
-  border-left: 2px solid #fff;
+  border-left: 2px solid #000;
   position: relative;
 }
 
@@ -513,7 +514,7 @@ section {
   font-weight: 600;
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
-  color: #fff;
+  color: #000;
   margin-bottom: 10px;
 }
 
@@ -531,7 +532,7 @@ section {
 
 .resume .resume-item ul li {
   padding-bottom: 10px;
-  color: #fff;
+  color: #000;
 }
 
 .resume .resume-item:last-child {
@@ -546,8 +547,8 @@ section {
   border-radius: 50px;
   left: -9px;
   top: 0;
-  background: #fff;
-  border: 2px solid #fff;
+  background: #000;
+  border: 2px solid #000;
 }
 
 .resume .download i {
