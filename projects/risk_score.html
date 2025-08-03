@@ -1,0 +1,176 @@
+Risk Score
+
+Issue:
+
+How can we tell how much risk we have exposed that is caused by known vulnerabilities in first party code, third party code, and misconfigurations? Additionally, how can we track progress or lack there of in order to help allocate resources and report to management?
+
+
+First attempt:
+
+
+
+
+For both dynamic and static we obtain a sum of open issue risk score. These totals are separated according to the tool which they stem from when they are sent to Splunk.
+
+For each tool, we have three running sums separated by severity, let's call it <TOOL>_<SEVERITY>_RISK, starting at 0 and three counts of how many issues have been processed in a counter called <TOOL>_<SEVERITY>_COUNT
+
+We pull every issue which is currently open in static and look at its CVSS score which is in a range between 0 and 10, as well as how many days since the issue has been introduced into the code base which we will call INTRO_DATE.
+
+CVSS score is correlated to severity on the below scale:
+
+Severity	CVSS Score
+Critical	9.0-10
+High	    7.0-8.9
+Medium	    4.0-6.9
+
+
+The time that the issue has existed is used to calculate a weight modifier which is the percentage of time within the SLA which has elapsed. If the issue is within SLA, then we get a value of under 100. This modification then reduces the severity score for that particular issue.
+
+
+The CVSS_Score is multiplied by our calculated WEIGHT and this result is then added to the appropriate <SEVERITY>_TOTAL_RISK count and 1 is added to the appropriate <SEVERITY>_ISSUE_COUNT
+
+The following results are sent to Splunk:
+
+Risk Sum	            Issue Count
+static_CRITICAL_RISK	static_COUNT_CRITICAL
+static_HIGH_RISK	    static_COUNT_HIGH
+static_MEDIUM_RISK	    static_COUNT_MEDIUM
+dynamic_CRITICAL_RISK	dynamic_COUNT_CRITICAL
+dynamic_HIGH_RISK	    dynamic_COUNT_HIGH
+dynamic_MEDIUM_RISK	    dynamic_COUNT_MEDIUM
+ 
+
+AppSec Risk Calculation
+Finally, we have enough information to calculate the AppSec Average Risk Score.
+
+Risk Sum calculations are additionally weighted by a fixed number depending on the severity which is detailed in the above table.
+
+For the static code tool, the value after the SLA weight modification was then divided by the count of issues
+static_critical_score = static_critical_risk/static_count_critical
+static_high_score = static_high_risk/static_count_high
+static_medium_score = static_medium_risk/static_count_medium
+
+For the dynamic scanning tool, the value after the SLA weight modification was divided by 100 + the count of websites that we were scanning.
+dynamic_critical_score = (dynamic_critical_risk/dynamic_count_crtitical)/(100+dynamic_website_count)
+dynamic_high_score = (dynamic_high_risk/dynamic_count_high)/(100+dynamic_website_count)
+dynamic_medium_score = (dynamic_medium_risk/dynamic_count_medium)/(100+dynamic_website_count)
+
+The final number was all of the individual modified severity scores, of which there are six, are added together and then divided by six.
+average=(static_critical_score+static_high_score+static_medium_score+dynamic_critical_score+dynamic_high_score+dynamic_medium_score)/6
+
+This appeared to work well when first reviewing the results. More issues were discovered, and the score went up. Issues were resolved and the score went down. However, it never seemed to move all that significantly. 
+The cracks started to form when looking at the calculations before and after issues were known to have been remediated and the score appeared to not be changing
+
+
+Assume that we have 2 critical findings, each with a cvss score of 9.5
+Using our above formulation above, if one of them is resolved the score remains unchanged.
+
+Lets go through an example to see what was happening:
+Take our hypothetical 2 critical findings. 
+
+static_critical_score = (static_critical_risk/static_count_critical)/100
+static_critical_score = ((950+950)/2)/100
+static_critical_score = 9.5
+
+Now lets resolve one of the issues
+
+static_critical_score = (950/1)/100
+static_critical_score = 9.5
+
+
+
+Take your guess at what statistical misjudgemnt is creating this issue.
+
+This statistic is actually calculating the avergae CVSS score of an issue in each severity range. And then when averaged together, is calculating the average CVSS score of an issue. Or spcifically for the dynamic scanner, the average CVSS score of an issue on an average website.
+
+This is not a very useful metric to determine how effective remediation efforts have been.
+
+
+
+
+CVSS Sum
+The value is the sum of the CVSS scores of all issues present in our environment as reported by the tools utilized
+
+ 
+
+Calculation Method:
+Every issue inherently has a CVSS score that ranges from 0 to 10. Severity is determined by where in this range the calculated risk falls. 
+ 
+
+We get a list of all present issues of the severity Medium, High, and Critical and multiply the CVSS score by 100.
+
+The score then gets weighed by how long the issue has existed. If it has existed for less time than the associated severity's SLA, the (CVSS Score * 100) gets reduced by the percentage of time that remains before SLA is hit. The resulting value gets added onto our running sum.
+
+Ex. 10.0 Critical severity vulnerability that has been present for 5 days:
+
+(10 *100) * (5/14) = 357.12
+
+Once all issues have been added to the sum it is sent to Splunk.
+
+Splunk applies a weight based on severity, shown in the above chart, and then divides by 100 to produce the final CVSS Sum value that is displayed.
+
+Ex. above issue when shown on Splunk Dashboard
+
+(357.12*2)/100 = 714.24
+
+These same calculations are performed for each LOB so that they can all be displayed separately. Projects need to be correctly sorted/tagged to their LOB for valid calculations
+
+Notes:
+static only counts CVSS scores from issues present in branches named [main, master, release]
+
+dynamic only counts CVSS scores from issues present on a website that is tagged with an LOB tag
+
+ 
+
+Ratio
+This statistic shows the ratio of [Issues resolved in the past 30 days : Issues introduced in the past 30 days]
+
+The goal is to be as far below 1 as possible
+
+ 
+
+Calculation Method:
+Retrieve a list of all issues that have a resolved date within the past 30 days and all issues that have a created date of within the past 30 days. Have two counters, one for resolved issue count and one for introduced issue count. We need to include all issues even if they do not have a possible solution.
+
+Loop through the list of issues. If the issue you are looking at is marked as resolved, add one to the resolved counter. If the issue you are looking at is marked as open, add one to the introduced counter.
+
+Divide the introduced counter by the resolved counter and send the data to Splunk.
+
+ 
+
+Notes:
+The Ratio statistic can be below 1 and the CVSS Sum can trend upwards. This is possible if we are resolving more issues than we are introducing, but the new issues being introduced have a higher CVSS score than what is being resolved
+
+If no issues are resolved in the past 30 days, the ratio will show the number of all issues introduced in the previous 30 days
+
+If the resolved counter is 0, we set it to 1 in order to avoid a divide by 0 error
+
+static only counts issues present in branches named [main, master, release]
+
+dynamic only counts issues present on a website that is tagged with an LOB tag
+
+ 
+
+TTL
+How long have issues seen in the last 30 days, resolved or not, been present
+
+ 
+
+Calculation Method:
+Retrieve a list of all issues that have been seen within the past 30 days. Have two counters, one for sum of days and one for issue count
+
+Loop through the list of issues. If the issue is marked as resolved, add the difference between the created date and the resolved date to the sum of days counter and add 1 to the issue count. If the issue is marked as open, add the difference between the created date and the current date to the sum of days counter and add 1 to the issue count.
+
+Divide the sum of days by the issue count and send the data to Splunk.
+
+ 
+
+Notes:
+If the issue count is 0 we will send the value 0 to Splunk in order to avoid a divide by 0 error
+
+ 
+
+
+Revised metric calculation method:
+
+
