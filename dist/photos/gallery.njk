@@ -1,0 +1,17 @@
+---
+layout: /layout.njk
+pagination:
+  data: collections.galleries
+  size: 1
+  alias: gallery
+permalink: "photos/{{ gallery.name }}/index.html"
+---
+
+<h2>{{ gallery.name | title }}</h2>
+<div class="gallery-grid">
+  {% for img in gallery.images %}
+    <a href="{{ img }}" class="glightbox">
+      <img src="{{ img }}" alt="{{ gallery.name }}" loading="lazy">
+    </a>
+  {% endfor %}
+</div>
