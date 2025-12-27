@@ -20,6 +20,7 @@ jobs:
 
       - name: Debug env
         run: |
+          echo "R2_BUCKET=$R2_BUCKET"
           node -e "console.log('R2_BUCKET:', process.env.R2_BUCKET)"
         env:
           R2_BUCKET: ${{ secrets.R2_BUCKET }}
