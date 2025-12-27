@@ -2,7 +2,7 @@ name: Build Eleventy Site
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
 
 jobs:
