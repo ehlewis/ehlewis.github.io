@@ -1072,6 +1072,41 @@ section {
 }
 
 /*--------------------------------------------------------------
+# Gallery
+--------------------------------------------------------------*/
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.gallery-grid a {
+  display: block;
+  width: 100%;
+  /* padding-top: 66.66%; /* 3:2 aspect ratio (height/width*100) */
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 200px;          /* fixed height for uniformity */
+  object-fit: cover;      /* crop and fill the container without distortion */
+  border-radius: 8px;     /* optional: rounded corners */
+  object-position: center; /* Centers image inside box */
+  display: block;
+  transition: transform 0.3s;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.05);
+}
+
+
+
+/*--------------------------------------------------------------
 # Breadcrumbs
 --------------------------------------------------------------*/
 .breadcrumbs {

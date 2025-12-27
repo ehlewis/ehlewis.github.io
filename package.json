@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "npx eleventy --serve",
+    "build": "npx eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  },
+  "dependencies": {
+    "@11ty/eleventy-img": "^6.0.4",
+    "@aws-sdk/client-s3": "^3.958.0",
+    "dotenv": "^17.2.3"
+  }
+}
