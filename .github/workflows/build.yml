@@ -36,7 +36,7 @@ jobs:
 
       # Upload dist folder as an artifact
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
@@ -45,4 +45,5 @@ jobs:
     needs: build
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
