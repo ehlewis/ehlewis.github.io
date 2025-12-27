@@ -34,8 +34,15 @@ jobs:
           R2_BUCKET: ${{ env.R2_BUCKET }}
           R2_PUBLIC_URL: ${{ env.R2_PUBLIC_URL }}
 
+      # Upload dist folder as an artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
-        with:
-          folder: dist           # folder containing the site
-
