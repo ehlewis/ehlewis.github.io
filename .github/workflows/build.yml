@@ -22,13 +22,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Debug env
-        run: |
-          echo "R2_BUCKET=$R2_BUCKET"
-          node -e "console.log('R2_BUCKET:', process.env.R2_BUCKET)"
-        env:
-          R2_BUCKET: ${{ env.R2_BUCKET }}
-
       - name: Install dependencies
         run: npm ci
 
@@ -40,3 +33,10 @@ jobs:
           R2_SECRET_KEY: ${{ secrets.R2_SECRET_KEY }}
           R2_BUCKET: ${{ env.R2_BUCKET }}
           R2_PUBLIC_URL: ${{ env.R2_PUBLIC_URL }}
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        with:
+          branch: gh-pages       # branch to deploy to
+          folder: dist           # folder containing the site
+
