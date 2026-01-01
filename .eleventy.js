@@ -1,5 +1,3 @@
-const fs = require("fs");
-const path = require("path");
 const slugify = require("slugify");
 const Image = require("@11ty/eleventy-img");
 const { S3Client, ListObjectsV2Command } = require("@aws-sdk/client-s3");
