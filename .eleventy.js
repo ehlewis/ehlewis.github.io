@@ -88,10 +88,16 @@ module.exports = function (eleventyConfig) {
             const images = (objects.Contents || [])
                 .map(obj => obj.Key)
                 .filter(key => key.match(/\.(jpe?g|png|webp)$/i))
-                .map(key => ({
-                filename: key.split("/").pop(),
-                url: `${baseUrl}/${key}`
-                }));
+                .map(key => {
+                    const originalUrl = `${baseUrl}/${key}`;
+                    const thumbUrl = `${baseUrl}/w400/${key}`;
+                    return {
+                        filename: key.split("/").pop(),
+                        url: thumbUrl,
+                        thumbUrl,
+                        originalUrl
+                    };
+                });
             console.log("IMAGES: ", images);
             galleries.push({ name: galleryName, slug: gallerySlug, images });
         }
