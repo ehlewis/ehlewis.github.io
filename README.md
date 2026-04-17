@@ -1,55 +1,97 @@
-## Quick Setup
+## ehlewis.github.io
 
-### Install Requirements
+Static Eleventy site with Cloudflare R2 photo gallery support.
 
-`npm install @11ty/eleventy @11ty/eleventy-img slugify @aws-sdk/client-s3`
+### Features
 
-### Set Environment Variables
+- Eleventy-based static site generator
+- Responsive image handling
+- Automatic gallery discovery from R2
+- GitHub Actions build and deploy pipeline
 
-Required for local dev and GitHub Actions:
+## Requirements
 
-export R2_ACCOUNT_ID=<your-account-id>
-export R2_ACCESS_KEY=<your-access-key>
-export R2_SECRET_KEY=<your-secret-key>
-export R2_BUCKET=<bucket-name>
-export R2_PUBLIC_URL=https://cdn.example.com
+- Node.js
+- npm
+- Cloudflare R2 credentials
+- GitHub repo with Pages enabled (for deploy)
 
-    For GitHub Actions, store R2_* secrets in repo settings.
+## Local Setup
 
+1. Install dependencies
 
-### Build
+    ```bash
+    npm install @11ty/eleventy @11ty/eleventy-img slugify @aws-sdk/client-s3
+    ```
 
-`npm run build`
+2. Set required environment variables
 
-Output is written to dist/.
-Gallery Setup
+    ```bash
+    export R2_ACCOUNT_ID=<your-account-id>
+    export R2_ACCESS_KEY=<your-access-key>
+    export R2_SECRET_KEY=<your-secret-key>
+    export R2_BUCKET=<bucket-name>
+    export R2_PUBLIC_URL=https://cdn.example.com
+    ```
 
-    Photos are stored in Cloudflare R2 under photos/<gallery-name>/.
+3. Run locally
 
-    Eleventy automatically discovers galleries and generates /photos/<slug>/index.html.
+    ```bash
+    npm run dev
+    ```
 
-    The photo shortcode handles responsive images with lazy loading.
+4. Open browser
 
-Example R2 object structure:
+    Visit `http://localhost:8080`
 
+## Build
+
+Generate the static site into dist:
+
+```bash
+npm run build
+```
+
+Output is written to dist.
+
+## Gallery Setup
+
+Photos are stored in Cloudflare R2 under `photos/<gallery-name>/`.
+
+Eleventy automatically discovers galleries and generates `/photos/<slug>/index.html`.
+
+The photo shortcode handles responsive images with lazy loading.
+
+Example R2 structure:
+
+```
 photos/
 └── Gallery/
     ├── img1.jpg
     ├── img2.jpg
     └── img3.jpg
+```
 
-### Run Locally
+## GitHub Actions Deployment
 
-`npm run dev`
+### Environment variables
 
-Visit http://localhost:8080 to preview.
+Store these values in GitHub repository secrets:
 
-### GitHub Actions Deployment
+- `R2_ACCOUNT_ID`
+- `R2_ACCESS_KEY`
+- `R2_SECRET_KEY`
+- `R2_BUCKET`
+- `R2_PUBLIC_URL`
 
-Workflow:
+### Workflow
 
-    Build site (npm run build) using R2 environment variables.
+1. GitHub Actions runs the build using the R2 environment variables.
+2. The dist folder is generated and uploaded as an artifact.
+3. The site is deployed to GitHub Pages.
 
-    Upload dist/ as artifact.
+### Notes
 
-    Deploy to GitHub Pages.
+- Ensure GitHub Pages is configured for the repo.
+- Confirm `R2_PUBLIC_URL` matches the CDN or public URL used for served images.
+
