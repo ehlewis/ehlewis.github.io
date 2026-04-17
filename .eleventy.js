@@ -93,7 +93,8 @@ module.exports = function (eleventyConfig) {
                     const thumbUrl = `${baseUrl}/w400/${key}`;
                     return {
                         filename: key.split("/").pop(),
-                        url: thumbUrl,
+                        thumb_url: thumbUrl,
+                        url: originalUrl,
                         thumbUrl,
                         originalUrl
                     };
